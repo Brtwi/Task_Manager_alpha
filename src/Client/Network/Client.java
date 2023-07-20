@@ -1,5 +1,6 @@
-package Client.ViewModel.Network;
+package Client.Network;
 
+import Shared.Services.FileService;
 import Shared.Model.Task;
 
 import java.io.*;
@@ -25,6 +26,8 @@ public class Client
         this.dataOutputStream = dos;
     }
 
+
+
     public void sendRequest(String request)
     {
         try
@@ -33,9 +36,10 @@ public class Client
             outputStream.flush();
         } catch (IOException e)
         {
-            System.out.println("Błąd przy wysyłaniu request");
+            System.out.println("Error while sending request");
         }
     }
+
 
     public void sendInfo(String info)
     {
@@ -45,9 +49,10 @@ public class Client
             outputStream.flush();
         } catch (IOException e)
         {
-            System.out.println("Błąd przy wysyłaniu UTF");
+            System.out.println("Error while sending UTF");
         }
     }
+
 
     public void sendTask(Task task)
     {
@@ -66,7 +71,7 @@ public class Client
 
         } catch (IOException e)
         {
-            System.out.println("Błąd przy wysyłaniu zadania");
+            System.out.println("Error while sending task");
         }
     }
 
@@ -88,9 +93,10 @@ public class Client
 
         } catch (IOException e)
         {
-            System.out.println("Błąd przy wysyłaniu plików");
+            System.out.println("Error while sending files");
         }
     }
+
 
     public String readMessage()
     {
@@ -99,10 +105,11 @@ public class Client
             return inputStream.readUTF();
         } catch (IOException e)
         {
-            System.out.println("Błąd przy odczytywaniu wiadomości");
+            System.out.println("Error while reading message");
             return null;
         }
     }
+
     public void receiveFiles()
     {
 
@@ -113,17 +120,14 @@ public class Client
             byte[] fileData = new byte[fileSize];
             dataInputStream.readFully(fileData);
 
+            FileService.createDirectory("Klient");
+            FileService.createFile(fileName, fileData);
 
-            File fileToSave = new File("C:\\Users\\brtwi\\Documents\\Studia\\IV semestr\\" +
-                    "Programowanie zaawnsowanych aplikacji JAVA\\" + fileName);
 
-            FileOutputStream fos = new FileOutputStream(fileToSave);
-            fos.write(fileData);
-
-            fos.close();
         } catch (IOException e)
         {
-            System.out.println("Błąd przy pobieraniu plików");
+            System.out.println("Error while downloading files");
+            e.printStackTrace();
         }
     }
 
@@ -131,12 +135,11 @@ public class Client
     {
         try
         {
-
             return inputStream.readObject();
 
         } catch (IOException | ClassNotFoundException e)
         {
-            System.out.println("Błąd przy pobieraniu danych " + e.getMessage());
+            System.out.println("Error while reading object " + e.getMessage());
         }
         return null;
     }
@@ -162,7 +165,7 @@ public class Client
             fileSocket.close();
         } catch (IOException e)
         {
-            System.out.println("Błąd przy zamykaniu połączenia");
+            System.out.println("Error while closing connection");
         }
     }
 

@@ -1,4 +1,4 @@
-package Client.ViewModel.Network;
+package Client.Network;
 
 import Shared.Commands;
 
@@ -32,7 +32,7 @@ public class Connection
 
         } catch (IOException e)
         {
-            System.out.println("Błąd przy nawiązywaniu połączenia");
+            System.out.println("Error while getting connection");
         }
     }
 

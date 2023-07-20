@@ -1,7 +1,7 @@
-package Client.ViewModel.Thread;
+package Client.Thread;
 
-import Client.ViewModel.Network.Client;
-import Client.ViewModel.Network.Connection;
+import Client.Network.Client;
+import Client.Network.Connection;
 import Shared.Commands;
 
 import javax.swing.*;
@@ -44,7 +44,6 @@ public class RefreshUsersListThread extends Thread
                 }
             } catch (InterruptedException e)
             {
-                System.out.println("Okno zamknięte");
             }
         }
     }

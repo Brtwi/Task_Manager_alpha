@@ -3,8 +3,8 @@ package Client.ViewModel;
 import Client.View.CreateTask;
 import Client.View.MainWindow;
 import Client.View.TaskDetails;
-import Client.ViewModel.Network.Connection;
-import Client.ViewModel.Thread.TaskForMeThread;
+import Client.Network.Connection;
+import Client.Thread.TaskForMeThread;
 import Shared.Commands;
 import Shared.Model.Task;
 
@@ -32,15 +32,18 @@ public class MainWindowViewModel
         thread = new TaskForMeThread(this);
     }
 
+
     public Vector<Task> getAllTasksListData()
     {
         return allTasksListData;
     }
 
+
     public String getUser()
     {
         return user;
     }
+
 
     public void setupLists()
     {
@@ -48,6 +51,7 @@ public class MainWindowViewModel
         mainWindow.getMyTaskList().setListData(myTasksListData);
         mainWindow.getOtherTasksList().setListData(otherTasksListData);
     }
+
 
     private void addActions()
     {
@@ -128,6 +132,7 @@ public class MainWindowViewModel
         });
     }
 
+
     private void deleteTaskAction(ActionEvent actionEvent)
     {
         if(!mainWindow.getAllTaskList().isSelectionEmpty())
@@ -145,11 +150,13 @@ public class MainWindowViewModel
         setupLists();
     }
 
+
     private void addTaskAction(ActionEvent e)
     {
         Connection.getClient().sendRequest(Commands.WAIT);
         new CreateTask(mainWindow);
     }
+
 
     public void addTaskToLists(Task task)
     {
@@ -159,11 +166,13 @@ public class MainWindowViewModel
         mainWindow.getMyTaskList().setListData(myTasksListData);
     }
 
+
     public void addTaskToAllTaskList(Task task)
     {
         allTasksListData.add(task);
         mainWindow.getAllTaskList().setListData(allTasksListData);
     }
+
 
     public void addTaskToSent(Task task)
     {
@@ -171,19 +180,20 @@ public class MainWindowViewModel
         mainWindow.getOtherTasksList().setListData(otherTasksListData);
     }
 
+
     private String usernameDialog()
     {
         String login =  "";
         Vector<String> usedLogins = (Vector<String>) Connection.getClient().getResponse();
         while(login == null || login.isEmpty())
         {
-            login = JOptionPane.showInputDialog(this.mainWindow, "Podaj swoją nazwę");
+            login = JOptionPane.showInputDialog(this.mainWindow, "Enter your username");
             if(login == null || login.isBlank())
             {
-                JOptionPane.showMessageDialog(this.mainWindow, "Proszę wprowadzić nazwę", "Brak danych", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.mainWindow, "Please enter your username", "Missing data", JOptionPane.ERROR_MESSAGE);
             } else if (usedLogins.contains(login))
             {
-                JOptionPane.showMessageDialog(this.mainWindow, "Podana nazwa jest już zajęta", "Zajęty login", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this.mainWindow, "This username is already taken", "Unavailable username", JOptionPane.ERROR_MESSAGE);
                 login = "";
             }
         }

@@ -1,7 +1,7 @@
-package Client.ViewModel.Thread;
+package Client.Thread;
 
-import Client.ViewModel.Network.Client;
-import Client.ViewModel.Network.Connection;
+import Client.Network.Client;
+import Client.Network.Connection;
 import Shared.Model.Task;
 
 public class SendTaskThread extends Thread

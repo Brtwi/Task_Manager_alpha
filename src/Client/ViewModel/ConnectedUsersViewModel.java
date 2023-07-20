@@ -1,7 +1,7 @@
 package Client.ViewModel;
 
 import Client.View.ConnectedUsers;
-import Client.ViewModel.Thread.RefreshUsersListThread;
+import Client.Thread.RefreshUsersListThread;
 
 import javax.swing.*;
 import java.awt.event.MouseAdapter;
@@ -29,7 +29,6 @@ public class ConnectedUsersViewModel
         addActions();
     }
 
-
     public void addActions()
     {
         window.addWindowListener(new WindowAdapter()
@@ -52,9 +51,12 @@ public class ConnectedUsersViewModel
                 if(e.getClickCount() == 1)
                 {
                     if(usersView.getSelectedValue() != null)
+                    {
                         parentViewModel.setReceiverLabel((String)usersView.getSelectedValue());
+                        parentViewModel.getWindow().getSaveButton().setEnabled(false);
+                    }
                     thread1.interrupt();
-                    parentViewModel.getWindow().getSaveButton().setEnabled(false);
+
                     window.dispose();
                 }
             }

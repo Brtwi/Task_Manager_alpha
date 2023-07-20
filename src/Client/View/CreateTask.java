@@ -59,10 +59,9 @@ public class CreateTask extends JDialog
         return receiverLabel;
     }
 
-
     public void initialize()
     {
-        setTitle("Dodaj zadanie");
+        setTitle("New task");
         setModalityType(ModalityType.APPLICATION_MODAL);
         setContentPane(contentPane);
         setSize(500,400);

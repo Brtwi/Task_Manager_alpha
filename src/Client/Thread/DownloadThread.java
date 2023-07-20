@@ -1,7 +1,8 @@
-package Client.ViewModel.Thread;
+package Client.Thread;
 
-import Client.ViewModel.Network.Client;
-import Client.ViewModel.Network.Connection;
+import Client.Network.Client;
+import Client.Network.Connection;
+
 
 public class DownloadThread extends Thread
 {

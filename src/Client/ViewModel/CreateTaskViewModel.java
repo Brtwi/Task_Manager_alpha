@@ -3,8 +3,8 @@ package Client.ViewModel;
 import Client.Model.State;
 import Client.View.ConnectedUsers;
 import Client.View.CreateTask;
-import Client.ViewModel.Network.Connection;
-import Client.ViewModel.Thread.SendTaskThread;
+import Client.Network.Connection;
+import Client.Thread.SendTaskThread;
 import Shared.Commands;
 import Shared.Model.Task;
 
@@ -31,26 +31,30 @@ public class CreateTaskViewModel
         addedFiles = new ArrayList<>();
     }
 
+
     public MainWindowViewModel getMainViewModel()
     {
         return mainViewModel;
     }
+
 
     public void setReceiverLabel(String text)
     {
         window.getReceiverLabel().setText(text);
     }
 
+
     public CreateTask getWindow()
     {
         return window;
     }
 
+
     public Task saveTask()
     {
         if(window.getTitleTextField().getText() == null || window.getTitleTextField().getText().isEmpty())
         {
-            JOptionPane.showMessageDialog(this.window, "Nie podano tytułu zadania");
+            JOptionPane.showMessageDialog(this.window, "Please enter a title");
         }
         else if(window.getDetailsTextArea().getText() == null || window.getDetailsTextArea().getText().isEmpty())
         {
@@ -58,7 +62,7 @@ public class CreateTaskViewModel
                     window.getTitleTextField().getText(),
                     "",
                     this.user,
-                    State.DO_ZROBIENIA,
+                    State.TODO,
                     addedFiles,
                     addedFiles.size()
 
@@ -70,7 +74,7 @@ public class CreateTaskViewModel
                     window.getTitleTextField().getText(),
                     window.getDetailsTextArea().getText(),
                     this.user,
-                    State.DO_ZROBIENIA,
+                    State.TODO,
                     addedFiles,
                     addedFiles.size()
             );
@@ -78,10 +82,12 @@ public class CreateTaskViewModel
         return null;
     }
 
+
     private void filesAdded(String filePath)
     {
         addedFiles.add(new File(filePath));
     }
+
 
     private void showUsersAction(ActionEvent actionEvent)
     {
@@ -91,10 +97,12 @@ public class CreateTaskViewModel
         }
     }
 
+
     private void cancelAction(ActionEvent actionEvent)
     {
         window.dispose();
     }
+
 
     private void addFilesAction(ActionEvent actionEvent)
     {
@@ -106,6 +114,7 @@ public class CreateTaskViewModel
             filesAdded(fileChooser.getSelectedFile().getAbsolutePath());
         }
     }
+
 
     private void saveTaskAction(ActionEvent actionEvent)
     {
@@ -141,6 +150,7 @@ public class CreateTaskViewModel
             window.dispose();
         }
     }
+
 
     private void addActions()
     {

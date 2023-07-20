@@ -2,17 +2,12 @@ package Server.Thread;
 
 import Server.Helpers.ConvertData;
 import Server.Model.Client;
-import Shared.Model.Task;
 import Shared.Commands;
-import Shared.Services.FileService;
+import Shared.Model.Task;
 
 import java.io.*;
 import java.net.Socket;
 import java.net.URISyntaxException;
-import java.nio.file.FileStore;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -44,7 +39,7 @@ public class ClientHandler extends Thread
             dataOutput = new DataOutputStream(fileSocket.getOutputStream());
         } catch (IOException e)
         {
-            System.out.println("Error while opening streams");
+            System.out.println("Błąd przy otwieraniu strumieni");
         }
     }
 
@@ -58,6 +53,7 @@ public class ClientHandler extends Thread
             while (true)
             {
                 String message = (String)inFromClient.readObject();
+                System.out.println("Klient przysłał " + message);
 
                 switch(message)
                 {
@@ -86,15 +82,18 @@ public class ClientHandler extends Thread
 
                         Vector<String> logins = new Vector<>();
 
+                        //Wysłanie zajętych loginów
                         connectedClients.stream().map(Client::getUsername).forEach(logins::add);
                         outToClient.writeObject(logins);
 
+                        //Odczytanie nowego loginu
                         message = (String)inFromClient.readObject();
 
+                        //Utworzenie i dodanie nowego klienta
                         client = new Client(message, outToClient);
                         connectedClients.add(this.client);
 
-                        System.out.println("Client added to list");
+                        System.out.println("Dodano do listy");
                         System.out.println(connectedClients.size() + " connected");
 
                         outToClient.writeObject(Commands.HELLO);
@@ -124,7 +123,7 @@ public class ClientHandler extends Thread
                                 {
                                     c.sendNewTaskRequest();
                                     c.sendTask(task);
-                                    System.out.println("Task sent to " + c.getUsername());
+                                    System.out.println("Wysłano task do " + c.getUsername());
                                 }
                                 c.addTaskToList(task);
 
@@ -268,12 +267,24 @@ public class ClientHandler extends Thread
             byte[] fileData = new byte[fileSize];
             dataInput.readFully(fileData);
 
-            FileService.createDirectory("Serwer");
-            client.getFiles().add(FileService.createFile(fileName, fileData));
+            String projectPath = ClientHandler.class.getProtectionDomain().getCodeSource().getLocation().toURI().getPath();
+            String jarDir = new File(projectPath).getParent();
+            String filePath = jarDir + File.separator + "Serwer" + File.separator;
 
+            File fileToSave = new File(filePath + fileName);
+
+            FileOutputStream fos = new FileOutputStream(fileToSave);
+            fos.write(fileData);
+
+            client.getFiles().add(fileToSave);
+
+            fos.close();
         } catch (IOException e)
         {
-            System.out.println("Error while getting files");
+            System.out.println("Błąd przy odbieraniu plików");
+        } catch (URISyntaxException e)
+        {
+            System.out.println("Błąd przy pobieraniu ścieżki zapisu");
         }
 
     }
@@ -295,10 +306,10 @@ public class ClientHandler extends Thread
             dataOutput.write(fileData);
             dataOutput.flush();
 
-            System.out.println("File sent");
+            System.out.println("Wysłano plik");
         } catch (IOException e)
         {
-            System.out.println("Error while sending file");
+            System.out.println("Błąd przy wysyłaniu plików");
         }
     }
 }

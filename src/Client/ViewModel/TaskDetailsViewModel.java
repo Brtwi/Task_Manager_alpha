@@ -1,8 +1,8 @@
 package Client.ViewModel;
 
 import Client.View.TaskDetails;
-import Client.ViewModel.Network.Connection;
-import Client.ViewModel.Thread.DownloadThread;
+import Client.Network.Connection;
+import Client.Thread.DownloadThread;
 import Shared.Commands;
 
 import java.awt.event.ActionEvent;
@@ -17,6 +17,7 @@ public class TaskDetailsViewModel
         addActions();
     }
 
+
     public void addActions()
     {
         window.getCloseButton().addActionListener(this::closeAction);
@@ -25,6 +26,7 @@ public class TaskDetailsViewModel
         window.getSaveButton().addActionListener(this::saveAction);
     }
 
+
     private void editAction(ActionEvent actionEvent)
     {
         window.getSaveButton().setEnabled(true);
@@ -32,6 +34,7 @@ public class TaskDetailsViewModel
         window.getDetailsTextArea().setEnabled(true);
         window.getStateComboBox().setEnabled(true);
     }
+
 
     private void downloadAction(ActionEvent actionEvent)
     {
@@ -48,10 +51,12 @@ public class TaskDetailsViewModel
         }
     }
 
+
     private void closeAction(ActionEvent actionEvent)
     {
         window.dispose();
     }
+
 
     private void saveAction(ActionEvent actionEvent)
     {

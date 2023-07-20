@@ -3,7 +3,9 @@ package Server.Model;
 import Shared.Commands;
 import Shared.Model.Task;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,7 +30,6 @@ public class Client
         this.usersListLock = false;
     }
 
-
     public void sendMessage(String string)
     {
         try
@@ -37,10 +38,9 @@ public class Client
             outputStream.flush();
         } catch (IOException e)
         {
-            System.out.println("Error while sending UTF");
+            System.out.println("Błąd przy wysyłaniu UTF");
         }
     }
-
 
     public void sendNewTaskRequest()
     {
@@ -50,10 +50,9 @@ public class Client
             outputStream.flush();
         } catch (IOException e)
         {
-            System.out.println("Error while sending new task request");
+            System.out.println("Błąd przy wysyłaniu wiadomości NewTask");
         }
     }
-
 
     public void sendUpdateTaskRequest()
     {
@@ -63,7 +62,7 @@ public class Client
             outputStream.flush();
         } catch (IOException e)
         {
-            System.out.println("Error while sending updated data request");
+            System.out.println("Błąd przy wysyłaniu wiadomości Update");
         }
     }
 
@@ -75,10 +74,9 @@ public class Client
             outputStream.flush();
         } catch (IOException e)
         {
-            System.out.println("Error while sending task");
+            System.out.println("Błąd przy wysyłaniu taska");
         }
     }
-
     public void addTaskToList(Task newTask)
     {
         taskForClient.add(newTask);
@@ -93,7 +91,6 @@ public class Client
     {
         this.unsentUpdate.add(update);
     }
-
 
     public List<File> getFiles()
     {
@@ -115,18 +112,14 @@ public class Client
         return this.usersListLock;
     }
 
-
     public void setUsersListLock(boolean isLocked)
     {
         this.usersListLock = isLocked;
     }
-
-
     public List<Task> getUnsent()
     {
         return unsentTaks;
     }
-
 
     public List<List<String>> getUnsentUpdate()
     {

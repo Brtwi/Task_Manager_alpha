@@ -7,7 +7,6 @@ import java.util.Vector;
 
 public class ConvertData
 {
-
     public static Vector<String> convertToVector(HashSet<Client> hashSet)
     {
         Vector<String> vector = new Vector<>();

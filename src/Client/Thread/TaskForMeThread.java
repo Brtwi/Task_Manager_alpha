@@ -1,8 +1,8 @@
-package Client.ViewModel.Thread;
+package Client.Thread;
 
 import Client.ViewModel.MainWindowViewModel;
-import Client.ViewModel.Network.Client;
-import Client.ViewModel.Network.Connection;
+import Client.Network.Client;
+import Client.Network.Connection;
 import Shared.Commands;
 import Shared.Model.Task;
 
@@ -34,8 +34,6 @@ public class TaskForMeThread extends Thread
                     if(response instanceof String)
                         message = ((String)response);
 
-                    System.out.println("Serwer przysłał wiadomość: " + message);
-
                     switch (message)
                     {
                         case Commands.NEW_TASK ->
@@ -61,12 +59,8 @@ public class TaskForMeThread extends Thread
                                 }
                             }
                         }
-                        case Commands.WAIT ->
-                        {
-                            lock.wait();
-                        }
+                        case Commands.WAIT -> lock.wait();
                     }
-
                 }
                 sleep(1000);
             }

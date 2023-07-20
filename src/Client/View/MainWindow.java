@@ -57,6 +57,8 @@ public class MainWindow extends JFrame
     {
         return viewModel;
     }
+
+
     public void initialize()
     {
         setDefaultCloseOperation(EXIT_ON_CLOSE);

@@ -25,15 +25,15 @@ public class Server
 
                 System.out.println("New Client");
 
-                //Socket for file sending
+                //Socket do przesyłania plików
                 Socket socketFile = serverSocket.accept();
 
-                //Thread for client
+                //Wątek dla klienta
                 new ClientHandler(socket, socketFile).start();
             }
         } catch (IOException e)
         {
-            System.out.println("Error while connecting with client");
+            System.out.println("Błąd przy nawiązywaniu połączenia z klientem");
         }
         finally
         {
@@ -42,7 +42,7 @@ public class Server
                 serverSocket.close();
             } catch (IOException e)
             {
-                System.out.println("Error while closing server");
+                System.out.println("Błąd przy zamykaniu serwera");
             }
         }
     }

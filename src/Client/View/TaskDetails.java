@@ -87,6 +87,7 @@ public class TaskDetails extends JDialog
         return owner;
     }
 
+
     public void initialize()
     {
         setContentPane(contentPane);

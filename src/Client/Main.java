@@ -1,7 +1,7 @@
 package Client;
 
 import Client.View.MainWindow;
-import Client.ViewModel.Network.Connection;
+import Client.Network.Connection;
 
 public class Main
 {
